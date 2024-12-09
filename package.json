@@ -1,0 +1,25 @@
+{
+  "name": "alphab",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:ui": "playwright test --ui",
+    "test:ui:ci": "npx playwright test",
+    "test:ui:headed": "npx playwright test --headed",
+    "lint": "eslint --ext .js --ignore-path .gitignore --cache --fix tests",
+    "lint:ci": "eslint --ext .js --ignore-path .gitignore tests"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.9.3",
+    "allure-playwright": "^3.0.7",
+    "eslint-plugin-playwright": "^2.1.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.8",
+    "cheerio": "^1.0.0"
+  }
+}
