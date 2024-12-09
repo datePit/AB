@@ -86,36 +86,34 @@ test('TS1: Going to empty basket', async ({ page }) => {
 
 
 test('TS2.2: Going to basket with one NOdiscount item', async ({ page }) => {
-await page.goto(BASE_URL);
-expect(page.locator(basketElements.selectors.basketCountItems)).toContainText('0');
+  await page.goto(BASE_URL);
+  expect(page.locator(basketElements.selectors.basketCountItems)).toContainText('0');
 
-const productCards = await page.locator(catalogPage.selectors.fullPriceItem);
-const firstProduct = productCards.nth(0); 
+  const productCards = await page.locator(catalogPage.selectors.fullPriceItem);
+  const firstProduct = productCards.nth(0); 
 
-const productDetails = await extractProductDetailsLocator(firstProduct);
-await new Promise(resolve => setTimeout(resolve, 500));
-const { productName, productPrice, buyButton } = productDetails;
+  const productDetails = await extractProductDetailsLocator(firstProduct);
+  await new Promise(resolve => setTimeout(resolve, 500));
+  const { productName, productPrice, buyButton } = productDetails;
 
 
-await buyButton.click();
-await expect(page.locator(basketElements.selectors.basketCountItems)).toHaveText('1');
+  await buyButton.click();
+  await expect(page.locator(basketElements.selectors.basketCountItems)).toHaveText('1');
 
-await page.locator(basketElements.selectors.dropDownBasketButton).click();
+  await page.locator(basketElements.selectors.dropDownBasketButton).click();
 
-await expect(page.locator(basketElements.selectors.basketMenu)).toBeVisible();
-await expect(page.locator(basketElements.selectors.basketItemTitle)).toHaveText(productName, { timeout: 5000 });
+  await expect(page.locator(basketElements.selectors.basketMenu)).toBeVisible();
+  await expect(page.locator(basketElements.selectors.basketItemTitle)).toHaveText(productName, { timeout: 5000 });
 
-const basketItemPriceText = await (page.locator(basketElements.selectors.basketItemPrice)).innerText(); 
-expect(PriceParser(basketItemPriceText)).toBe(PriceParser(productPrice));
+  const basketItemPriceText = await (page.locator(basketElements.selectors.basketItemPrice)).innerText(); 
+  expect(PriceParser(basketItemPriceText)).toBe(PriceParser(productPrice));
 
-const basketTotalPriceText = await (page.locator(basketElements.selectors.basketItemPrice)).innerText();
-expect(PriceParser(basketTotalPriceText)).toBe(PriceParser(productPrice));
-
- 
-await page.locator(basketElements.selectors.directionToBasketButton, {hasText: 'Перейти в корзину'}).click({ timeout: 5000 });
+  const basketTotalPriceText = await (page.locator(basketElements.selectors.basketItemPrice)).innerText();
+  expect(PriceParser(basketTotalPriceText)).toBe(PriceParser(productPrice));
+  
+  await page.locator(basketElements.selectors.directionToBasketButton, {hasText: 'Перейти в корзину'}).click({ timeout: 5000 });
   expect(page).toHaveURL(`${BASE_URL}/basket`);
   expect((await page.request.get(`${BASE_URL}/basket`)).status()).toBe(200);
-
 });
 
 
@@ -208,7 +206,6 @@ test('TS4.4: Going to basket with 9 items', async ({page}) => {
   await page.locator(basketElements.selectors.directionToBasketButton, {hasText: 'Перейти в корзину'}).click({ timeout: 5000 });
   await expect(page).toHaveURL(`${BASE_URL}/basket`);
   await expect((await page.request.get(`${BASE_URL}/basket`)).status()).toBe(200);
-
 });
 
 
